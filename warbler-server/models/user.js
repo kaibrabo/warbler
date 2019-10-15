@@ -18,7 +18,13 @@ const userSchema = new mongoose.Schema({
   },
   profileImageUrl: {
     type: String
-  }
+  },
+  messages: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Message"
+    }
+  ]
 });
 
 // Hashing Password
@@ -47,11 +53,11 @@ userSchema.methods.comparePassword = async function(candidatePassword, next) {
   try {
     let isMatch = await bcrypt.compare(candidatePassword, this.password);
     return isMatch;
-  } catch(err) {
+  } catch (err) {
     // Otherwise send to error handler
     return next(err);
   }
-}
+};
 
 const User = mongoose.model("User", userSchema);
 
