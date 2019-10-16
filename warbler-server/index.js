@@ -5,15 +5,16 @@ const cors = require("cors"); // important for making requests from another doma
 const bodyParser = require("body-parser"); // allows use of form data via POST req.
 const errorHandler = require("./handlers/error");
 const authRoutes = require("./routes/auth");
+const messageRoutes = require("./routes/messages");
 
 const PORT = 8081;
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// If there is any request from "/api/auth",
-// Use authRoutes
+// If there is any request from "/api/auth", use authRoutes
 app.use("/api/auth", authRoutes);
+app.use("/api/users/:id/messages", messageRoutes);
 
 // all routes will be here
 
