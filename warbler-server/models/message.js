@@ -1,17 +1,22 @@
 const mongoose = require("mongoose");
 const User = require("./user");
 
-const messageSchema = new mongoose.Schema({
-  text: {
-    type: String,
-    required: true,
-    maxLength: 160
+const messageSchema = new mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+      maxLength: 160
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User" // ref. User schema in db & user model
+    }
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User" // ref. User schema in db & user model
+  {
+    timestamps: true
   }
-});
+);
 
 // Remove hook
 messageSchema.pre("remove", async function(next) {

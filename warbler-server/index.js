@@ -22,6 +22,20 @@ app.use(
 );
 
 // all routes will be here
+app.get("/api/messages", loginRequired, async function(req, res, next) {
+  try {
+    let messages = await db.Message.find()
+      .sort({ createdAt: "desc" })
+      .populate("user", {
+        username: true,
+        profileImageUrl: true
+      });
+
+      return res.status(200).json(messages);
+  } catch (err) {
+    return next(err);
+  }
+});
 
 app.use(function(req, res, next) {
   let err = new Error("Not Found");
